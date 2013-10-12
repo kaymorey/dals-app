@@ -1,0 +1,30 @@
+{
+  "name": "dals-app",
+  "version": "0.0.0",
+  "main": "lib/dals-app.js",
+  "description": "The best module ever.",
+  "homepage": "https://github.com/kaymorey/dals-app",
+  "bugs": "https://github.com/kaymorey/dals-app/issues",
+  "author": {
+    "name": "Katia Moreira",
+    "email": "contact@katia-moreira.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaymorey/dals-app"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.5.0"
+  },
+  "dependencies": {
+    "socket.io": "~0.9.16",
+    "ntwitter": "~0.5.0"
+  }
+}
