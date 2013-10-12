@@ -57,6 +57,7 @@ $(function() {
 	});
 
 	function loop() {
+		paper.clear();
 		for(var i = 0, length = particles.length; i < length; i++) {
 			particles[i].render();
 			particles[i].update();
