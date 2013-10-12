@@ -49,13 +49,104 @@ $(function() {
 		}
 	}
 
+	var Stats = function() {
+		this.total = 0;
+
+		this.candidats = {
+			'alizee': {
+				'name': 'Alizée',
+				'total': 0
+			},
+			'tal': {
+				'name': 'Tal',
+				'total': 0
+			},
+			'ournac': {
+				'name': 'Laurent Ournac',
+				'total': 0
+			},
+			'zaibat': {
+				'name': 'Brahim Zaibat',
+				'total': 0
+			},
+			'sargue': {
+				'name': 'Damien Sargue',
+				'total': 0
+			},
+			'keenv': {
+				'name': 'Keen\'V',
+				'total': 0
+			},
+			'milot': {
+				'name': 'Laetitia Milot',
+				'total': 0
+			},
+			'thilleman': {
+				'name': 'Laury Thilleman',
+				'total': 0
+			},
+			'titoff': {
+				'name': 'Titoff',
+				'total': 0
+			}
+		}
+	}
+
+	Stats.prototype = {
+		render: function() {
+			$('div#statistics div.total-tweets p.total').html(this.total);
+
+		},
+		update: function() {
+		}
+	}
+
 	// Particles tab
 	var particles = [];
 
+	// Stats
+	var stats = new Stats();
+
 	socket.on('tweet', function (data) {
-		// Create particle
-		var p = new Particle(data.text.length);
-		particles.push(p);
+		stats.total += 1;
+		
+		// Create particle all 3 tweets
+		if(stats.total % 3 == 0) {
+			var p = new Particle(data.text.length);
+			particles.push(p);
+		}
+
+		// Candidats
+		if(data.text.toLowerCase().indexOf('alizée') != -1) {
+			stats.candidats['alizee'] += 1;
+		}
+		if(data.text.toLowerCase().indexOf('tal') != -1) {
+			stats.candidats['tal'] += 1;
+		}
+		if(data.text.toLowerCase().indexOf('laurent') != -1 || data.text.toLowerCase().indexOf('ournac') != -1) {
+			stats.candidats['ournac'] += 1;
+		}
+		if(data.text.toLowerCase().indexOf('brahim') != -1 || data.text.toLowerCase().indexOf('zaibat') != -1) {
+			stats.candidats['zaibat'] += 1;
+		}
+		if(data.text.toLowerCase().indexOf('damien') != -1 || data.text.toLowerCase().indexOf('sargue') != -1) {
+			stats.candidats['sargue'] += 1;
+		}
+		if(data.text.toLowerCase().indexOf('keenv') != -1 || data.text.toLowerCase().indexOf('keen\'v') != -1) {
+			stats.candidats['keenv'] += 1;
+		}
+		if(data.text.toLowerCase().indexOf('laetitia') != -1 || data.text.toLowerCase().indexOf('milot') != -1) {
+			stats.candidats['milot'] += 1;
+		}
+		if(data.text.toLowerCase().indexOf('laury') != -1 || data.text.toLowerCase().indexOf('thilleman') != -1) {
+			stats.candidats['thilleman'] += 1;
+		}
+		if(data.text.toLowerCase().indexOf('titoff') != -1) {
+			stats.candidats['titoff'] += 1;
+		}
+		//stats.candidats.sort();
+
+		stats.render();
 	});
 
 	function loop() {

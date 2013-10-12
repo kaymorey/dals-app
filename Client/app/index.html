@@ -11,6 +11,7 @@
         <meta name="viewport" content="width=device-width">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/reset.css">
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
     </head>
@@ -18,7 +19,23 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div id="circles"></div>
+        <div id="circles">
+            <h1>#DALS LIVE</h1>
+        </div>
+        <div id="statistics">
+            <div class="content">
+                <div class="block total-tweets">
+                    <h2>Nombre total de tweets</h2>
+                    <p class="total"></p>
+                </div>
+                <div class="block candidats">
+                    <h2>Top candidats</h2>
+                    <p class="first"><span class="name"></span> <span class="total"></p>
+                    <p class="second"><span class="name"></span> <span class="total"></p>
+                    <p class="third"><span class="name"></span> <span class="total"></p>
+                </div>
+            </div>
+        </div>
 
 
         <!-- build:js scripts/vendor.js -->
