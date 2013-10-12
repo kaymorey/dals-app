@@ -38,7 +38,7 @@ $(function() {
 
 	Particle.prototype = {
 		render: function() {
-			paper.circle(this.x, this.y, this.length)
+			paper.circle(this.x, this.y, this.length / 3)
 			.attr("fill", this.color);
 		},
 		update: function() {
@@ -55,4 +55,13 @@ $(function() {
 		var p = new Particle(data.text.length);
 		particles.push(p);
 	});
+
+	function loop() {
+		for(var i = 0, length = particles.length; i < length; i++) {
+			particles[i].render();
+			particles[i].update();
+		}
+  		requestAnimationFrame(loop);
+	}
+	requestAnimationFrame(loop);
 });
