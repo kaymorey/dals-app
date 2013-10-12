@@ -11,7 +11,7 @@ $(function() {
 	blue = "#334d5c";
 
 	// Create paper Raphael
-	var paper = Raphael(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2);
+	var paper = Raphael(document.getElementById("circles"), SCREEN_WIDTH, SCREEN_HEIGHT / 2);
 
 	// Particle object
 	var Particle = function (length) {
@@ -33,13 +33,15 @@ $(function() {
 		}
 
 		// Length
-		this.length = length;
+		this.radius = length / 3;
 	}
 
 	Particle.prototype = {
 		render: function() {
-			paper.circle(this.x, this.y, this.length / 3)
-			.attr("fill", this.color);
+			paper.circle(this.x, this.y, this.radius)
+			.attr("fill", this.color)
+			.attr("stroke", "#444")
+			.attr("stroke-width", 3);
 		},
 		update: function() {
 			this.x += this.velX;
@@ -59,6 +61,17 @@ $(function() {
 	function loop() {
 		paper.clear();
 		for(var i = 0, length = particles.length; i < length; i++) {
+			if(
+				particles[i].x < 0 - particles[i].radius || 
+				particles[i].x > SCREEN_WIDTH + particles[i].radius || 
+				particles[i].y < 0 - particles[i].radius
+			) {
+				particles.splice(i, 1);
+				if(i == length - 1) {
+					break;
+				}
+				length--;
+			}
 			particles[i].render();
 			particles[i].update();
 		}
