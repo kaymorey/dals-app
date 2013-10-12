@@ -16,7 +16,7 @@ $(function() {
 	// Particle object
 	var Particle = function (length) {
 		// Velocity
-		this.velX = Math.random() * 2 + 0.5; 
+		this.velX = Math.random() * 4 - 2; 
 		this.velY = Math.random() * 2 + 0.5;
 
 		// Position
