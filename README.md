@@ -1,4 +1,4 @@
 dals-app
 ========
 
-A data viz application about DALS show
+A dataviz application about DALS show
