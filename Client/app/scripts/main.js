@@ -34,6 +34,8 @@ $(function() {
 
 		// Length
 		this.radius = length / 3;
+
+		this.move = true;
 	}
 
 	Particle.prototype = {
@@ -41,7 +43,10 @@ $(function() {
 			paper.circle(this.x, this.y, this.radius)
 			.attr("fill", this.color)
 			.attr("stroke", "#444")
-			.attr("stroke-width", 3);
+			.attr("stroke-width", 3)
+			.hover(function() {
+				this.move = false;
+			});
 		},
 		update: function() {
 			this.x += this.velX;
@@ -207,7 +212,9 @@ $(function() {
 				length--;
 			}
 			particles[i].render();
-			particles[i].update();
+			if(particles[i].move) {
+				particles[i].update();
+			}
 		}
   		requestAnimationFrame(loop);
 	}
