@@ -55,7 +55,7 @@ $(function() {
 
 			var cx = Math.floor(Math.random() * SCREEN_WIDTH);
 			var cy = 0 - this.radius;
-			var speed = Math.floor(Math.random() * 1500 + 2000);
+			var speed = Math.floor(Math.random() * 2500 + 3000);
 			circle.animate({cx: cx, cy: cy}, speed, 'linear', function() {
 				circle.remove();
 			});

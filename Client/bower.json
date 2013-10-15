@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "jquery": "~1.10.2",
-    "raphael": "~2.1.2",
-    "requirejs": "~2.1.9"
+    "raphael": "~2.1.2"
   },
   "devDependencies": {}
 }
