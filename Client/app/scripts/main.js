@@ -13,8 +13,12 @@ $(function() {
 	// Create paper Raphael
 	var paper = Raphael(document.getElementById("circles"), SCREEN_WIDTH, SCREEN_HEIGHT / 2);
 
-	// Particle object
-	var Particle = function (length) {
+	/***********************************
+	*		     PARTICLES             *
+	************************************/
+	var particles = [];
+
+	var Particle = function (length, text) {
 		// Velocity
 		this.velX = Math.random() * 4 - 2; 
 		this.velY = Math.random() * 2 + 0.5;
@@ -36,16 +40,38 @@ $(function() {
 		this.radius = length / 3;
 
 		this.move = true;
+
+		this.text = text;
 	}
 
 	Particle.prototype = {
 		render: function() {
-			paper.circle(this.x, this.y, this.radius)
-			.attr("fill", this.color)
-			.attr("stroke", "#444")
-			.attr("stroke-width", 3)
-			.hover(function() {
-				this.move = false;
+			var text = this.text;
+
+			var circle = paper.circle(this.x, this.y, this.radius)
+			.attr('fill', this.color)
+			.attr('stroke', '#444')
+			.attr('stroke-width', 3);
+
+			var cx = Math.floor(Math.random() * SCREEN_WIDTH);
+			var cy = 0 - this.radius;
+			var speed = Math.floor(Math.random() * 1500 + 2000);
+			circle.animate({cx: cx, cy: cy}, speed, 'linear', function() {
+				circle.remove();
+			});
+			
+			circle.hover(function() {
+				circle.pause();
+				circle.attr('stroke', '#FFF');
+			},
+			function() {
+				circle.animate({cx: cx, cy: cy}, speed, 'linear', function() {
+					circle.remove();
+				});
+				circle.attr('stroke', '#444');
+			})
+			circle.click(function() {
+				alert(text);
 			});
 		},
 		update: function() {
@@ -54,6 +80,9 @@ $(function() {
 		}
 	}
 
+	/***********************************
+	*		        STATS              *
+	************************************/
 	var Stats = function() {
 		this.total = 0;
 
@@ -174,29 +203,30 @@ $(function() {
 					this.thirdmaxIndex = index;
 				}
 			}
-			console.log(this.candidats);
+			//console.log(this.candidats);
 		}
-	}
-
-	// Particles tab
-	var particles = [];
-
-	// Stats
+	}    
 	var stats = new Stats();
 
+
+	/***********************************
+	*		    SOCKET TWEET           *
+	************************************/
 	socket.on('tweet', function (data) {
 		stats.total += 1;
 		
 		// Create particle all 3 tweets
 		if(stats.total % 1 == 0) {
-			var p = new Particle(data.text.length);
-			particles.push(p);
+			var p = new Particle(data.text.length, data.text);
+			//particles.push(p);
+			p.render();
 		}
 
 		stats.update(data);
 		stats.render();
 	});
 
+	/*
 	function loop() {
 		paper.clear();
 		for(var i = 0, length = particles.length; i < length; i++) {
@@ -219,4 +249,5 @@ $(function() {
   		requestAnimationFrame(loop);
 	}
 	requestAnimationFrame(loop);
+	*/
 });
