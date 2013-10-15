@@ -69,9 +69,16 @@ $(function() {
 					circle.remove();
 				});
 				circle.attr('stroke', '#444');
+				$.fancybox.close();
 			})
 			circle.click(function() {
-				alert(text);
+				$.fancybox.open( {
+					content: text,
+					closeBtn: false,
+					helpers: {
+						overlay: null
+					}
+				});
 			});
 		},
 		update: function() {
