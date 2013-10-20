@@ -9,6 +9,10 @@
     font-style: normal;
 }
 
+.clear {
+    clear: both;
+}
+
 body {
     background: #fafafa;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -30,6 +34,7 @@ div#circles h1 {
 
 div#statistics {
     background-color: #d6dadb;
+    height: 50%;
 }
 div#statistics div.content {
     width: 80%;
@@ -46,4 +51,25 @@ div#statistics div.content h2 {
 div#statistics div.content div.total-tweets p.total {
     color: #df5a49;
     font-size: 25px;
+}
+
+div.tweet {
+    background-color: #00ACEE;
+    color: #FFF;
+    font-family: 'Helvetica Neue', Helvetica, Tahoma, Arial, sans-serif;
+    font-size: 13px;
+    padding: 20px;
+}
+div.tweet img {
+    float: left;
+    padding-right: 15px;
+}
+div.tweet div.user {
+    padding-top: 10px;
+}
+div.tweet div.user span.name {
+    font-size: 14px;
+}
+div.tweet p.text {
+    padding-top: 10px;
 }

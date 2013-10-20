@@ -18,7 +18,7 @@ $(function() {
 	************************************/
 	var particles = [];
 
-	var Particle = function (length, text) {
+	var Particle = function (data) {
 		// Velocity
 		this.velX = Math.random() * 4 - 2; 
 		this.velY = Math.random() * 2 + 0.5;
@@ -37,16 +37,18 @@ $(function() {
 		}
 
 		// Length
-		this.radius = length / 3;
+		this.radius = data.text.length / 3;
 
 		this.move = true;
 
-		this.text = text;
+		this.data = data;
 	}
 
 	Particle.prototype = {
 		render: function() {
-			var text = this.text;
+			var text = this.data.text;
+			var id = this.data.id;
+			var data = this.data;
 
 			var circle = paper.circle(this.x, this.y, this.radius)
 			.attr('fill', this.color)
@@ -72,9 +74,24 @@ $(function() {
 				$.fancybox.close();
 			})
 			circle.click(function() {
+				console.log(data);
+				var user = data.user;
+				var template = '<div class="tweet">';
+					template += '<img src ="'+user.profile_image_url+'" alt="" />';
+					template += '<div class="user">';
+						template += '<span class="name">'+user.name+'</span><br />';
+						template += '<span class="screen-name">@'+user.screen_name+'</span>';
+					template += '</div>';
+					template += '<div class="clear"></div>';
+					template += '<p class="text">'+data.text+'</p>';
+				template += '</div>';
 				$.fancybox.open( {
-					content: text,
+					content: template,
 					closeBtn: false,
+					autoSize: false,
+					width: 500,
+					height: 'auto',
+					padding: 0,
 					helpers: {
 						overlay: null
 					}
@@ -161,7 +178,7 @@ $(function() {
 			}
 		},
 		update: function(data) {
-			if(data.text.toLowerCase().indexOf('alizée') != -1) {
+			if(data.text.toLowerCase().indexOf('alizée') != -1 || data.text.toLowerCase().indexOf('alizee') != -1) {
 				this.candidats['alizee']['total'] += 1;
 			}
 			if(data.text.toLowerCase().indexOf('tal') != -1) {
@@ -224,7 +241,7 @@ $(function() {
 		
 		// Create particle all 3 tweets
 		if(stats.total % 1 == 0) {
-			var p = new Particle(data.text.length, data.text);
+			var p = new Particle(data);
 			//particles.push(p);
 			p.render();
 		}
