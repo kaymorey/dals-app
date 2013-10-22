@@ -159,10 +159,24 @@ $(function() {
 	}
 
 	Stats.prototype = {
+		init: function() {
+			this.max = 0;
+			this.secondmax = 0;
+			this.thirdmax = 0;
+
+			this.maxIndex = '';
+			this.secondmaxIndex = '';
+			this.thirdmaxIndex = '';
+		},
 		render: function() {
 			$('div#statistics div.total-tweets p.total').html(this.total);
 
 			if(this.maxIndex != '') {
+				var template = '<p class="first">';
+				template += '<img src="../images/'+this.maxIndex+'" alt="" />';
+				template += '<span class="name">'+this.maxIndex['name']+'</span>';
+				template += '<span class="total">'+this.maxIndex['total']+'</span>';
+				template += '</p>';
 				$('div#statistics div.candidats p.first span.name').html(this.candidats[this.maxIndex]['name']);
 				$('div#statistics div.candidats p.first span.total').html(this.candidats[this.maxIndex]['total']);
 			}	
@@ -206,6 +220,7 @@ $(function() {
 				this.candidats['titoff']['total'] += 1;
 			}
 
+			this.init();
 			// Search for max
 			for(var index in this.candidats) {
 				if(this.candidats[index]['total'] > this.max) {
