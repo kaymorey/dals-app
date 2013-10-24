@@ -74,7 +74,6 @@ $(function() {
 				$.fancybox.close();
 			})
 			circle.click(function() {
-				console.log(data);
 				var user = data.user;
 				var template = '<div class="tweet">';
 					template += '<img src ="'+user.profile_image_url+'" alt="" />';
@@ -177,18 +176,25 @@ $(function() {
 				template += '<span class="name">'+this.maxIndex['name']+'</span>';
 				template += '<span class="total">'+this.maxIndex['total']+'</span>';
 				template += '</p>';
-				$('div#statistics div.candidats p.first span.name').html(this.candidats[this.maxIndex]['name']);
-				$('div#statistics div.candidats p.first span.total').html(this.candidats[this.maxIndex]['total']);
+				jQuery('div#statistics div.candidats').append(template);
 			}	
 
 			if(this.secondmaxIndex != '') {
-				$('div#statistics div.candidats p.second span.name').html(this.candidats[this.secondmaxIndex]['name']);
-				$('div#statistics div.candidats p.second span.total').html(this.candidats[this.secondmaxIndex]['total']);
+				var template = '<p class="second">';
+				template += '<img src="../images/'+this.secondmaxIndex+'" alt="" />';
+				template += '<span class="name">'+this.secondmaxIndex['name']+'</span>';
+				template += '<span class="total">'+this.secondmaxIndex['total']+'</span>';
+				template += '</p>';
+				jQuery('div#statistics div.candidats').append(template);
 			}
 
 			if(this.thirdmaxIndex != '') {
-				$('div#statistics div.candidats p.third span.name').html(this.candidats[this.thirdmaxIndex]['name']);
-				$('div#statistics div.candidats p.third span.total').html(this.candidats[this.thirdmaxIndex]['total']);
+				var template = '<p class="third">';
+				template += '<img src="../images/'+this.thirdmaxIndex+'" alt="" />';
+				template += '<span class="name">'+this.thirdmaxIndex['name']+'</span>';
+				template += '<span class="total">'+this.thirdmaxIndex['total']+'</span>';
+				template += '</p>';
+				jQuery('div#statistics div.candidats').append(template);
 			}
 		},
 		update: function(data) {
