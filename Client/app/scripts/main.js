@@ -109,45 +109,7 @@ $(function() {
 	************************************/
 	var Stats = function() {
 		this.total = 0;
-
-		this.candidats = {
-			'alizee': {
-				'name': 'Alizée',
-				'total': 0
-			},
-			'tal': {
-				'name': 'Tal',
-				'total': 0
-			},
-			'ournac': {
-				'name': 'Laurent Ournac',
-				'total': 0
-			},
-			'zaibat': {
-				'name': 'Brahim Zaibat',
-				'total': 0
-			},
-			'sargue': {
-				'name': 'Damien Sargue',
-				'total': 0
-			},
-			'keenv': {
-				'name': 'Keen\'V',
-				'total': 0
-			},
-			'milot': {
-				'name': 'Laetitia Milot',
-				'total': 0
-			},
-			'thilleman': {
-				'name': 'Laury Thilleman',
-				'total': 0
-			},
-			'titoff': {
-				'name': 'Titoff',
-				'total': 0
-			}
-		}
+		this.candidats = [];
 
 		this.max = 0;
 		this.secondmax = 0;
@@ -159,6 +121,18 @@ $(function() {
 	}
 
 	Stats.prototype = {
+		data: function(data) {
+			this.total = data.total;
+			this.candidats = data.candidats;
+
+			this.max = data.max;
+			this.secondmax = data.secondmax;
+			this.secondmax = data.secondmax;
+
+			this.maxIndex = data.maxIndex;
+			this.secondmaxIndex = data.secondmaxIndex;
+			this.thirdmaxIndex = data.thirdmaxIndex;
+		},
 		render: function() {
 			$('div#statistics div.total-tweets p.total').html(this.total);
 
@@ -178,6 +152,8 @@ $(function() {
 			}
 		},
 		update: function(data) {
+			this.total += 1;
+
 			if(data.text.toLowerCase().indexOf('alizée') != -1 || data.text.toLowerCase().indexOf('alizee') != -1) {
 				this.candidats['alizee']['total'] += 1;
 			}
@@ -229,24 +205,25 @@ $(function() {
 			}
 			//console.log(this.candidats);
 		}
-	}    
+	}
 	var stats = new Stats();
+	
 
 
 	/***********************************
 	*		    SOCKET TWEET           *
 	************************************/
-	socket.on('tweet', function (data) {
-		stats.total += 1;
+	socket.on('tweet', function (tweet, dataStats) {
 		
 		// Create particle all 3 tweets
+		stats.data(dataStats);
 		if(stats.total % 1 == 0) {
-			var p = new Particle(data);
+			var p = new Particle(tweet);
 			//particles.push(p);
 			p.render();
 		}
 
-		stats.update(data);
+		//stats.update(data);
 		stats.render();
 	});
 
