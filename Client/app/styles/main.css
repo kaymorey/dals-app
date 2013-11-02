@@ -35,6 +35,7 @@ div#circles h1 {
 div#statistics {
     background-color: #d6dadb;
     height: 50%;
+    padding-bottom: 10px;
 }
 div#statistics div.content {
     width: 80%;
@@ -53,6 +54,23 @@ div#statistics div.content div.total-tweets p.total {
     font-size: 25px;
 }
 
+div#statistics div.content div.candidats ul {
+    padding-top: 10px;
+}
+div#statistics div.content div.candidats ul li {
+    float: left;
+    padding-right: 20px;
+}
+div#statistics div.content div.candidats ul li span.total {
+    font-size: 1.5em;
+    color: #df5a49;
+}
+
+div.fancybox-wrap, div.fancybox-skin, div.fancybox-outer, div.tweet {
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
 div.tweet {
     background-color: #00ACEE;
     color: #FFF;

@@ -61,10 +61,12 @@ $(function() {
 			circle.animate({cx: cx, cy: cy}, speed, 'linear', function() {
 				circle.remove();
 			});
+			circle.toBack();
 			
 			circle.hover(function() {
 				circle.pause();
 				circle.attr('stroke', '#FFF');
+				circle.toFront();
 			},
 			function() {
 				circle.animate({cx: cx, cy: cy}, speed, 'linear', function() {
@@ -126,7 +128,7 @@ $(function() {
 
 			this.max = data.max;
 			this.secondmax = data.secondmax;
-			this.secondmax = data.secondmax;
+			this.thirdmax = data.thirdmax;
 
 			this.maxIndex = data.maxIndex;
 			this.secondmaxIndex = data.secondmaxIndex;
@@ -135,32 +137,36 @@ $(function() {
 		render: function() {
 			$('div#statistics div.total-tweets p.total').html(this.total);
 
+			var generalTemplate = '<ul>';
+
 			if(this.maxIndex != '') {
-				var template = '<p class="first">';
-				template += '<img src="../images/'+this.maxIndex+'" alt="" />';
-				template += '<span class="name">'+this.maxIndex['name']+'</span>';
-				template += '<span class="total">'+this.maxIndex['total']+'</span>';
-				template += '</p>';
-				jQuery('div#statistics div.candidats').append(template);
+				var template = '<li class="first">';
+				template += '<img src="http://localhost/labo/dals-app/Client/app/images/'+this.maxIndex+'.jpg" alt="" /><br />';
+				template += '<span class="name">'+this.candidats[this.maxIndex]['name']+'</span><br />';
+				template += '<span class="total">'+this.max+'</span> tweets';
+				template += '</li>';
+				generalTemplate += template;	
 			}	
 
 			if(this.secondmaxIndex != '') {
-				var template = '<p class="second">';
-				template += '<img src="../images/'+this.secondmaxIndex+'" alt="" />';
-				template += '<span class="name">'+this.secondmaxIndex['name']+'</span>';
-				template += '<span class="total">'+this.secondmaxIndex['total']+'</span>';
-				template += '</p>';
-				jQuery('div#statistics div.candidats').append(template);
+				var template = '<li class="second">';
+				template += '<img src="http://localhost/labo/dals-app/Client/app/images/'+this.secondmaxIndex+'.jpg" alt="" /><br />';
+				template += '<span class="name">'+this.candidats[this.secondmaxIndex]['name']+'</span><br />';
+				template += '<span class="total">'+this.secondmax+'</span> tweets';
+				template += '</li>';
+				generalTemplate += template;
 			}
 
 			if(this.thirdmaxIndex != '') {
-				var template = '<p class="third">';
-				template += '<img src="../images/'+this.thirdmaxIndex+'" alt="" />';
-				template += '<span class="name">'+this.thirdmaxIndex['name']+'</span>';
-				template += '<span class="total">'+this.thirdmaxIndex['total']+'</span>';
-				template += '</p>';
-				jQuery('div#statistics div.candidats').append(template);
+				var template = '<li class="third">';
+				template += '<img src="http://localhost/labo/dals-app/Client/app/images/'+this.thirdmaxIndex+'.jpg" alt="" /><br />';
+				template += '<span class="name">'+this.candidats[this.thirdmaxIndex]['name']+'</span><br />';
+				template += '<span class="total">'+this.thirdmax+'</span> tweets';
+				template += '</li>';
+				generalTemplate += template;
 			}
+			generalTemplate += '</ul>';
+			jQuery('div#statistics div.candidats div.stats').html(generalTemplate);
 		}
 	}
 	var stats = new Stats();
@@ -174,7 +180,7 @@ $(function() {
 		
 		// Create particle all 3 tweets
 		stats.data(dataStats);
-		if(stats.total % 1 == 0) {
+		if(stats.total % 3 == 0) {
 			var p = new Particle(tweet);
 			//particles.push(p);
 			p.render();
