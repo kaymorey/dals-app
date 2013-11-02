@@ -74,7 +74,6 @@ $(function() {
 				$.fancybox.close();
 			})
 			circle.click(function() {
-				console.log(data);
 				var user = data.user;
 				var template = '<div class="tweet">';
 					template += '<img src ="'+user.profile_image_url+'" alt="" />';
@@ -137,73 +136,31 @@ $(function() {
 			$('div#statistics div.total-tweets p.total').html(this.total);
 
 			if(this.maxIndex != '') {
-				$('div#statistics div.candidats p.first span.name').html(this.candidats[this.maxIndex]['name']);
-				$('div#statistics div.candidats p.first span.total').html(this.candidats[this.maxIndex]['total']);
+				var template = '<p class="first">';
+				template += '<img src="../images/'+this.maxIndex+'" alt="" />';
+				template += '<span class="name">'+this.maxIndex['name']+'</span>';
+				template += '<span class="total">'+this.maxIndex['total']+'</span>';
+				template += '</p>';
+				jQuery('div#statistics div.candidats').append(template);
 			}	
 
 			if(this.secondmaxIndex != '') {
-				$('div#statistics div.candidats p.second span.name').html(this.candidats[this.secondmaxIndex]['name']);
-				$('div#statistics div.candidats p.second span.total').html(this.candidats[this.secondmaxIndex]['total']);
+				var template = '<p class="second">';
+				template += '<img src="../images/'+this.secondmaxIndex+'" alt="" />';
+				template += '<span class="name">'+this.secondmaxIndex['name']+'</span>';
+				template += '<span class="total">'+this.secondmaxIndex['total']+'</span>';
+				template += '</p>';
+				jQuery('div#statistics div.candidats').append(template);
 			}
 
 			if(this.thirdmaxIndex != '') {
-				$('div#statistics div.candidats p.third span.name').html(this.candidats[this.thirdmaxIndex]['name']);
-				$('div#statistics div.candidats p.third span.total').html(this.candidats[this.thirdmaxIndex]['total']);
+				var template = '<p class="third">';
+				template += '<img src="../images/'+this.thirdmaxIndex+'" alt="" />';
+				template += '<span class="name">'+this.thirdmaxIndex['name']+'</span>';
+				template += '<span class="total">'+this.thirdmaxIndex['total']+'</span>';
+				template += '</p>';
+				jQuery('div#statistics div.candidats').append(template);
 			}
-		},
-		update: function(data) {
-			this.total += 1;
-
-			if(data.text.toLowerCase().indexOf('alizée') != -1 || data.text.toLowerCase().indexOf('alizee') != -1) {
-				this.candidats['alizee']['total'] += 1;
-			}
-			if(data.text.toLowerCase().indexOf('tal') != -1) {
-				this.candidats['tal']['total'] += 1;
-			}
-			if(data.text.toLowerCase().indexOf('laurent') != -1 || data.text.toLowerCase().indexOf('ournac') != -1) {
-				this.candidats['ournac']['total'] += 1;
-			}
-			if(data.text.toLowerCase().indexOf('brahim') != -1 || data.text.toLowerCase().indexOf('zaibat') != -1) {
-				this.candidats['zaibat']['total'] += 1;
-			}
-			if(data.text.toLowerCase().indexOf('damien') != -1 || data.text.toLowerCase().indexOf('sargue') != -1) {
-				this.candidats['sargue']['total'] += 1;
-			}
-			if(data.text.toLowerCase().indexOf('keenv') != -1 || data.text.toLowerCase().indexOf('keen\'v') != -1) {
-				this.candidats['keenv']['total'] += 1;
-			}
-			if(data.text.toLowerCase().indexOf('laetitia') != -1 || data.text.toLowerCase().indexOf('milot') != -1) {
-				this.candidats['milot']['total'] += 1;
-			}
-			if(data.text.toLowerCase().indexOf('laury') != -1 || data.text.toLowerCase().indexOf('thilleman') != -1) {
-				this.candidats['thilleman']['total'] += 1;
-			}
-			if(data.text.toLowerCase().indexOf('titoff') != -1) {
-				this.candidats['titoff']['total'] += 1;
-			}
-
-			// Search for max
-			for(var index in this.candidats) {
-				if(this.candidats[index]['total'] > this.max) {
-					this.max = this.candidats[index]['total'];
-					this.maxIndex = index;
-				}
-			}
-			// Search for second max
-			for(var index in this.candidats) {
-				if(this.candidats[index]['total'] > this.secondmax && index != this.maxIndex) {
-					this.secondmax = this.candidats[index]['total'];
-					this.secondmaxIndex = index;
-				}
-			}
-			// Search for third max
-			for(var index in this.candidats) {
-				if(this.candidats[index]['total'] > this.thirdmax && index != this.maxIndex && index != this.secondmaxIndex) {
-					this.thirdmax = this.candidats[index]['total'];
-					this.thirdmaxIndex = index;
-				}
-			}
-			//console.log(this.candidats);
 		}
 	}
 	var stats = new Stats();

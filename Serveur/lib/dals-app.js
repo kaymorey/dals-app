@@ -65,6 +65,15 @@ var Stats = function() {
 }
 
 Stats.prototype = {
+	init: function() {
+		this.max = 0;
+		this.secondmax = 0;
+		this.thirdmax = 0;
+
+		this.maxIndex = '';
+		this.secondmaxIndex = '';
+		this.thirdmaxIndex = '';
+	},
 	render: function() {
 		$('div#statistics div.total-tweets p.total').html(this.total);
 
@@ -113,6 +122,8 @@ Stats.prototype = {
 		if(data.text.toLowerCase().indexOf('titoff') != -1) {
 			this.candidats['titoff']['total'] += 1;
 		}
+
+		this.init();
 
 		// Search for max
 		for(var index in this.candidats) {
