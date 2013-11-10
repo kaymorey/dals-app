@@ -83,6 +83,8 @@ var Stats = function() {
 	this.maxIndex = '';
 	this.secondmaxIndex = '';
 	this.thirdmaxIndex = '';
+
+	this.mostRetweeted = '';
 }
 
 Stats.prototype = {
@@ -194,6 +196,11 @@ io.sockets.on('connection', function (socket) {
 			stats.update(tweet);
 			timeline.update();
 			socket.emit('tweet', tweet, stats);
+		}
+		else {
+			if(tweet.retweeted_status.retweet_count > stats.mostRetweeted.retweet_count || stats.mostRetweeted == '') {
+				stats.mostRetweeted = tweet;
+			}
 		}
 	});
 

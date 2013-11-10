@@ -171,6 +171,8 @@ $(function() {
 		this.maxIndex = '';
 		this.secondmaxIndex = '';
 		this.thirdmaxIndex = '';
+
+		this.mostRetweeted = '';
 	}
 
 	Stats.prototype = {
@@ -185,10 +187,17 @@ $(function() {
 			this.maxIndex = data.maxIndex;
 			this.secondmaxIndex = data.secondmaxIndex;
 			this.thirdmaxIndex = data.thirdmaxIndex;
+
+			this.mostRetweeted = data.mostRetweeted;
 		},
 		render: function() {
+			// Total tweets
 			$('div#statistics div.total-tweets p.total').html(this.total);
 
+			// Most retweeted
+			$('div#statistics div.rt p').html(this.mostRetweeted);
+
+			// Challengers
 			var generalTemplate = '<ul>';
 
 			if(this.maxIndex != '') {
