@@ -9,6 +9,10 @@
     font-style: normal;
 }
 
+
+/***************************
+*          GENERAL         *
+****************************/
 .clear {
     clear: both;
 }
@@ -20,6 +24,9 @@ body {
     font-family: 'Bebas', Arial, sans-serif;
 }
 
+/***************************
+*          CIRCLES         *
+****************************/
 div#circles {
     background-color: #334d5c;
 }
@@ -32,6 +39,9 @@ div#circles h1 {
     font-size: 24px;
 }
 
+/***************************
+*           STATS          *
+****************************/
 div#statistics {
     background-color: #d6dadb;
     height: 50%;
@@ -49,11 +59,32 @@ div#statistics div.content h2 {
     color: #334d5c;
     font-size: 22px;
 }
+
+/***************************
+*         TIMELINE         *
+****************************/
+div#timeline ul {
+    margin-left: -14px;
+}
+div#timeline ul li {
+    display: inline-block;
+    width: 110px;
+}
+div#timeline ul li:first-child {
+    width: 130px;
+}
+
+/***************************
+*           TOTAL          *
+****************************/
 div#statistics div.content div.total-tweets p.total {
     color: #df5a49;
     font-size: 25px;
 }
 
+/***************************
+*        CHALLENGERS       *
+****************************/
 div#statistics div.content div.candidats ul {
     padding-top: 10px;
 }
@@ -66,6 +97,9 @@ div#statistics div.content div.candidats ul li span.total {
     color: #df5a49;
 }
 
+/***************************
+*        FANCY TWEET       *
+****************************/
 div.fancybox-wrap, div.fancybox-skin, div.fancybox-outer, div.tweet {
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;

@@ -10,12 +10,64 @@ $(function() {
 	green = "#45b29d",
 	blue = "#334d5c";
 
-	// Create paper Raphael
-	var paper = Raphael(document.getElementById("circles"), SCREEN_WIDTH, SCREEN_HEIGHT / 2);
+	/***********************************
+	*		      TIMELINE             *
+	************************************/
+	var timelineWidth = 700;
+	var timelineHeight = 250;
+	var timelineMax = 4500;
+	var intervals = [0, 40, 70, 100, 130, 160, 175];
+
+	var timelinePaper = Raphael(document.getElementById("timeline"), timelineWidth, timelineHeight);
+
+	var Timeline = function(width, height, intervals, max) {
+		this.width = width;
+		this.height = height;
+		this.intervals = intervals;
+		this.tweetMinutes = 0;
+		this.smallInterval = 0;
+		this.max = max;
+	}
+	Timeline.prototype = {
+		update: function(tweetMinutes) {
+			/*this.smallInterval += 1;
+			this.tweetMinutes = tweetMinutes;*/
+		},
+		data: function(data) {
+			this.path = data.path;
+		},
+		render: function(path) {
+			var i = 0;
+			var length = this.intervals.length;
+
+			// X Axis
+			timelinePaper.path("M0,"+this.height+"L"+this.width+","+this.height)
+				.attr('stroke', red)
+				.attr('stroke-width', 3);
+
+			// Intervals
+			for(i = 0; i < length; i++) {
+				timelinePaper.path("M"+this.intervals[i]*this.width/this.intervals[length-1]+","+(this.height-10)+"L"+this.intervals[i]*this.width/this.intervals[length-1]+","+this.height)
+				.attr('stroke', red)
+				.attr('stroke-width', 3);
+			}
+
+			// Graph path
+			timelinePaper.path(this.path)
+				.attr('stroke', blue)
+				.attr('stroke-width', 1);
+		}
+	}
+
+	var timeline = new Timeline(timelineWidth, timelineHeight, intervals, timelineMax);
+	timeline.render();
 
 	/***********************************
 	*		     PARTICLES             *
 	************************************/
+	// Create paper Raphael
+	var paper = Raphael(document.getElementById("circles"), SCREEN_WIDTH, SCREEN_HEIGHT / 2);
+
 	var particles = [];
 
 	var Particle = function (data) {
@@ -190,28 +242,9 @@ $(function() {
 		stats.render();
 	});
 
-	/*
-	function loop() {
-		paper.clear();
-		for(var i = 0, length = particles.length; i < length; i++) {
-			if(
-				particles[i].x < 0 - particles[i].radius || 
-				particles[i].x > SCREEN_WIDTH + particles[i].radius || 
-				particles[i].y < 0 - particles[i].radius
-			) {
-				particles.splice(i, 1);
-				if(i == length - 1) {
-					break;
-				}
-				length--;
-			}
-			particles[i].render();
-			if(particles[i].move) {
-				particles[i].update();
-			}
-		}
-  		requestAnimationFrame(loop);
-	}
-	requestAnimationFrame(loop);
-	*/
+	socket.on('smallInterval', function (dataTimeline) {
+		timeline.data(dataTimeline);
+		console.log(timeline.path);
+		timeline.render();
+	});
 });

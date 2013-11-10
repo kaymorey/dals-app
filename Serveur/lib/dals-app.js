@@ -11,7 +11,28 @@
 var twitter = require('ntwitter');
 var io = require('socket.io').listen(9001);
 var EventEmitter = require('events').EventEmitter;
-var pubsub = new EventEmitter(); 
+var pubsub = new EventEmitter();
+
+var Timeline = function() {
+	this.tweetMinutes = 0;
+	this.minutesCount = 0;
+
+	this.width = 700;
+	this.height = 250;
+	this.max = 2500;
+	this.intervals = [0, 40, 70, 100, 130, 160, 175];
+
+	this.path = "M0,"+this.height;
+}
+Timeline.prototype = {
+	update: function() {
+		this.tweetMinutes+= 1;
+	},
+	interval: function() {
+		this.minutesCount += 1;
+		this.path += "L"+(this.minutesCount*this.width/this.intervals[this.intervals.length-1])+","+(this.height-(this.tweetMinutes*this.height/this.max));
+	}
+}
 
 var Stats = function() {
 	this.total = 0;
@@ -95,6 +116,8 @@ Stats.prototype = {
 	update: function(data) {
 		this.total += 1;
 
+		this.tweetMinutes += 1;
+
 		if(data.text.toLowerCase().indexOf('alizée') != -1 || data.text.toLowerCase().indexOf('alizee') != -1) {
 			this.candidats['alizee']['total'] += 1;
 		}
@@ -146,9 +169,9 @@ Stats.prototype = {
 				this.thirdmaxIndex = index;
 			}
 		}
-		//console.log(this.candidats);
 	}
 }
+var timeline = new Timeline();
 var stats = new Stats();
 
 var twitterClient = new twitter({
@@ -158,7 +181,7 @@ var twitterClient = new twitter({
 	access_token_secret: 'qtMhkuXiWRLjcKRku5eMEANQp3JmKCturbIrp5x1U'
 });
 
-twitterClient.stream('statuses/filter', {'track' : 'dals'}, function (stream) {
+twitterClient.stream('statuses/filter', {'track' : '#dals'}, function (stream) {
 	stream.on('data', function (data) {
 		console.log(data.text);
 		pubsub.emit('tweet', data);
@@ -167,7 +190,16 @@ twitterClient.stream('statuses/filter', {'track' : 'dals'}, function (stream) {
 
 io.sockets.on('connection', function (socket) {
 	pubsub.on('tweet', function (tweet) {
-		stats.update(tweet);
-		socket.emit('tweet', tweet, stats);
+		if(tweet.retweeted_status ==  null) {
+			stats.update(tweet);
+			timeline.update();
+			socket.emit('tweet', tweet, stats);
+		}
 	});
+
+	setInterval(function() {
+		timeline.interval();
+		socket.emit('smallInterval', timeline);
+		timeline.tweetMinutes = 0;
+	}, 60000);
 });
