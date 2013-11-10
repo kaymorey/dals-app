@@ -195,7 +195,7 @@ $(function() {
 			$('div#statistics div.total-tweets p.total').html(this.total);
 
 			// Most retweeted
-			$('div#statistics div.rt p').html(this.mostRetweeted);
+			$('div#statistics div.rt p').html(this.mostRetweeted.text);
 
 			// Challengers
 			var generalTemplate = '<ul>';
@@ -253,7 +253,7 @@ $(function() {
 
 	socket.on('smallInterval', function (dataTimeline) {
 		timeline.data(dataTimeline);
-		console.log(timeline.path);
+		console.log(stats.mostRetweeted);
 		timeline.render();
 	});
 });

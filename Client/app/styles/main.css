@@ -23,6 +23,9 @@ body {
     color: #333;
     font-family: 'Bebas', Arial, sans-serif;
 }
+.inline-block {
+    display: inline-block;
+}
 
 /***************************
 *          CIRCLES         *
@@ -80,6 +83,9 @@ div.timeline ul li:nth-last-child(2) {
 /***************************
 *           TOTAL          *
 ****************************/
+div#statistics div.content div.total-tweets {
+    margin-right: 50px;
+}
 div#statistics div.content div.total-tweets p.total {
     color: #df5a49;
     font-size: 25px;

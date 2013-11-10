@@ -14,7 +14,7 @@ var EventEmitter = require('events').EventEmitter;
 var pubsub = new EventEmitter();
 
 var Timeline = function() {
-	this.tweetMinutes = 300; /* TO CHANGE */
+	this.tweetMinutes = 0;
 	this.minutesCount = 0;
 
 	this.width = 700;
@@ -30,7 +30,7 @@ Timeline.prototype = {
 	},
 	interval: function() {
 		this.minutesCount += 1;
-		this.path += "L"+(this.minutesCount*this.width/this.intervals[this.intervals.length-1])+","+(this.height-(this.tweetMinutes*this.height/this.max));
+		this.path += "L"+(this.minutesCount*this.width/this.intervals[this.intervals.length-1])+","+(this.height-(this.tweetMinutes*30*this.height/this.max));
 	}
 }
 
@@ -199,7 +199,7 @@ io.sockets.on('connection', function (socket) {
 		}
 		else {
 			if(tweet.retweeted_status.retweet_count > stats.mostRetweeted.retweet_count || stats.mostRetweeted == '') {
-				stats.mostRetweeted = tweet;
+				stats.mostRetweeted = tweet.retweeted_status;
 			}
 		}
 	});
