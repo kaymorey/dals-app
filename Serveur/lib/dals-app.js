@@ -14,7 +14,7 @@ var EventEmitter = require('events').EventEmitter;
 var pubsub = new EventEmitter();
 
 var Timeline = function() {
-	this.tweetMinutes = 0;
+	this.tweetMinutes = 300; /* TO CHANGE */
 	this.minutesCount = 0;
 
 	this.width = 700;

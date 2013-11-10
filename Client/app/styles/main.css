@@ -63,15 +63,18 @@ div#statistics div.content h2 {
 /***************************
 *         TIMELINE         *
 ****************************/
-div#timeline ul {
+div.timeline ul {
     margin-left: -14px;
 }
-div#timeline ul li {
+div.timeline ul li {
     display: inline-block;
-    width: 110px;
+    width: 117px;
 }
-div#timeline ul li:first-child {
-    width: 130px;
+div.timeline ul li:first-child {
+    width: 156px;
+}
+div.timeline ul li:nth-last-child(2) {
+    width: 59px;
 }
 
 /***************************
